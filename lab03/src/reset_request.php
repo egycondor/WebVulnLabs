@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if(!find_user($u)){ $msg="If the account exists, a reset is sent."; }
   else {
     // VULN: predictable one-day code and we display the reset link directly
-    $code = substr(md5('STATIC-SALT-'.$u.date('Ymd')),0,6);
+    $code = substr(md5($u.date('Ymd')),0,6);
     $link = "/reset_do.php?u=".urlencode($u)."&code=$code";
   }
 }
@@ -49,3 +49,4 @@ a{color:#a5f3fc}
   </div>
 </body>
 </html>
+
