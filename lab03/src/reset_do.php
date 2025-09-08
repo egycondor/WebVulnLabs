@@ -3,7 +3,7 @@ require_once __DIR__.'/config.php';
 
 $u = $_GET['u'] ?? '';
 $code = $_GET['code'] ?? '';
-$expected = substr(md5('STATIC-SALT-'.$u.date('Ymd')),0,6);
+$expected = substr(md5($u.date('Ymd')),0,6);
 
 if(!$u || $code!==$expected || !find_user($u)){
   http_response_code(400);
@@ -26,3 +26,4 @@ set_password($u, $temp);
   <p><a href="/login.php">Back to login</a></p>
 </body>
 </html>
+
