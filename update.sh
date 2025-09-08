@@ -57,6 +57,7 @@ main(){
     "${src_dir}/" "${PROJECT_DIR}/"
 
   log "Updated to VERSION ${RV}."
+  chmod +x "${PROJECT_DIR}/update.sh" || true
 #  redeploy
 }
 
