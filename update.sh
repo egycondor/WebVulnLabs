@@ -50,6 +50,7 @@ main(){
   log "Syncing files into ${PROJECT_DIR}…"
   rsync -a --delete \
     --exclude ".env" \
+    --exclude "update.sh" \
     --exclude ".env.*" \
     --exclude "*/data/" \
     --exclude "*/volumes/" \
