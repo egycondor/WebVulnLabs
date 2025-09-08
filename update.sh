@@ -5,7 +5,7 @@ set -euo pipefail
 OWNER_REPO="${OWNER_REPO:-egycondor/WebVulnLabs}"
 BRANCH="${BRANCH:-main}"
 PROJECT_DIR="${PROJECT_DIR:-/home/ubuntu/vuln-labs}"
-REDEPLOY="${REDEPLOY:-true}"
+REDEPLOY="${REDEPLOY:-false}"
 
 RAW_VER_URL="https://raw.githubusercontent.com/${OWNER_REPO}/${BRANCH}/VERSION"
 TARBALL_URL="https://codeload.github.com/${OWNER_REPO}/tar.gz/refs/heads/${BRANCH}"
