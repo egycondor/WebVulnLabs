@@ -57,7 +57,7 @@ main(){
     "${src_dir}/" "${PROJECT_DIR}/"
 
   log "Updated to VERSION ${RV}."
-  redeploy
+#  redeploy
 }
 
 main "$@"
