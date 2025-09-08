@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sessionlab
+      MYSQL_USER: sess
+      MYSQL_PASSWORD: sess
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks: [labnet]
+
+  web:
+    image: php:8.3-apache
+    depends_on: [db]
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8081:80"
+    command: bash -lc "docker-php-ext-install mysqli && a2enmod rewrite && sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf && apache2-foreground"
+    networks: [labnet]
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24   # same pattern you used before
