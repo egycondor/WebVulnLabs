@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: brutelab
+      MYSQL_USER: bruter
+      MYSQL_PASSWORD: bruter
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3307:3306"
+    networks:
+      - labnet
+
+  web:
+    image: php:8.3-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      PHP_DISPLAY_ERRORS: "1"
+    command: bash -lc "docker-php-ext-install mysqli && apache2-foreground"
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24   # pick a free /24
