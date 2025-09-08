@@ -58,6 +58,10 @@ a{color:#a5f3fc}
         <div class="field"><label>New password</label><input name="new" type="password" required></div>
         <div class="field"><label>Confirm</label><input name="confirm" type="password" required></div>
         <button class="btn" type="submit">Update</button>
+        <p class="muted" style="margin-top:12px">
+        <a href="/home.php">Back to Home</a> · <a href="/login.php">Login</a>
+</p>
+
       </form>
 
       <p class="muted" style="margin-top:12px"><a href="/login.php">Back</a></p>

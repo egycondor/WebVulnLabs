@@ -7,7 +7,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   $user = find_user($u);
   if($user && $user['password_md5'] === weak_hash($p)){
     setcookie('user',$u,0,'/');
-    header("Location: /change_password.php"); exit;
+    header("Location: /home.php"); exit;
+
   } else { $msg = "Invalid credentials."; }
 }
 $just = isset($_GET['just']) ? $_GET['just'] : '';
