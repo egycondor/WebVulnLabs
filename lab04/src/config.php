@@ -11,7 +11,7 @@ function weak_hash($s){ return md5($s); }
 function create_session($username){
   global $conn;
   $sid = bin2hex(random_bytes(16));                      // 32 hex
-  $otp = str_pad((string)random_int(0,999999),6,'0',STR_PAD_LEFT); // 6-digit numeric
+  $otp = str_pad((string)random_int(0,9999),4,'0',STR_PAD_LEFT); // 4-digit numeric
   $u = $conn->real_escape_string($username);
   $s = $conn->real_escape_string($sid);
   $o = $conn->real_escape_string($otp);

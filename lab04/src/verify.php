@@ -37,7 +37,7 @@ button{width:100%;padding:12px;border-radius:12px;border:0;background:linear-gra
   <?php if($msg): ?><p class="msg"><?=htmlspecialchars($msg)?></p><?php endif; ?>
   <form method="POST">
     <label>One-Time Password</label>
-    <input name="otp" maxlength="6" placeholder="000000" autocomplete="one-time-code">
+    <input name="otp" maxlength="4" placeholder="0000" autocomplete="one-time-code">
     <button type="submit">Verify</button>
   </form>
 </div></div>
