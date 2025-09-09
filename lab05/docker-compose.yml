@@ -10,14 +10,25 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks: [labnet]
 
-  web:
+  web:  # <-- indented under services
     image: php:8.3-apache
     depends_on: [db]
     volumes:
       - ./src:/var/www/html
     ports:
       - "8085:80"
-    command: bash -lc "docker-php-ext-install mysqli && a2enmod rewrite && sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf && apache2-foreground"
+    command: >
+      bash -lc "
+        apt-get update &&
+        DEBIAN_FRONTEND=noninteractive apt-get install -y imagemagick ghostscript fonts-dejavu-core &&
+        docker-php-ext-install mysqli &&
+        a2enmod rewrite &&
+        sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
+        mkdir -p /var/www/html/files &&
+        convert -size 595x842 xc:white -gravity center -pointsize 28 -fill black -font DejaVu-Sans -annotate 0 'Invoice 1 - Admin - Dummy PDF Content' /var/www/html/files/invoice_1.pdf &&
+        convert -size 595x842 xc:white -gravity center -pointsize 28 -fill black -font DejaVu-Sans -annotate 0 'Invoice 2 - Alice - Dummy PDF Content' /var/www/html/files/invoice_2.pdf &&
+        convert -size 595x842 xc:white -gravity center -pointsize 28 -fill black -font DejaVu-Sans -annotate 0 'Invoice 3 - Bob - Dummy PDF Content' /var/www/html/files/invoice_3.pdf &&
+        apache2-foreground"
     networks: [labnet]
 
 networks:
