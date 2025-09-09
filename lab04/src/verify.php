@@ -33,7 +33,7 @@ button{width:100%;padding:12px;border-radius:12px;border:0;background:linear-gra
 <body>
 <div class="wrap"><div class="card">
   <h2>Two-Factor Verification</h2>
-  <p class="muted">A 6-digit code was “sent to your device”.</p>
+  <p class="muted">A 4-digit code was “sent to your device”.</p>
   <?php if($msg): ?><p class="msg"><?=htmlspecialchars($msg)?></p><?php endif; ?>
   <form method="POST">
     <label>One-Time Password</label>
@@ -42,3 +42,4 @@ button{width:100%;padding:12px;border-radius:12px;border:0;background:linear-gra
   </form>
 </div></div>
 </body></html>
+
