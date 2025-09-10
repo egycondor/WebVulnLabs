@@ -1,16 +1,18 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
 $mysqli = @new mysqli('db','shop','shop','shop');
-if($mysqli->connect_error){ die('DB error'); }
+if($mysqli->connect_error){
+  http_response_code(500);
+  echo '<div style="padding:12px;background:#1a0d10;border:1px solid #7f1d1d;color:#fecaca;border-radius:12px">DB connection error.</div>';
+  exit;
+}
 
 $q = $_GET['q'] ?? '';
-$sort = $_GET['sort'] ?? '';
 
+// Intentionally vulnerable
 $sql = "SELECT name, price, description FROM products WHERE name LIKE '%$q%'";
-
-if ($sort !== '') {
-  $sql .= " ORDER BY $sort";
-}
 
 $res = $mysqli->query($sql);
 ?>
@@ -25,30 +27,27 @@ $res = $mysqli->query($sql);
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:#e5e7eb;font-family:system-ui,Segoe UI,Roboto}
     .container{max-width:980px;margin:30px auto;padding:24px;background:#0f172a;border:1px solid #1f2937;border-radius:18px}
     h1{margin:.2em 0 .5em} .muted{color:var(--muted)}
-    input{padding:10px;border:1px solid #263046;background:#0b1324;color:#e5e7eb;border-radius:10px}
+    input{padding:10px;border:1px solid #263046;background:#0b1324;color:#e5e7eb;border-radius:10px;width:100%}
     button{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,#06b6d4,#22d3ee);color:#031321;font-weight:700}
     table{width:100%;border-collapse:collapse;margin-top:12px}
     th,td{border:1px solid #263046;padding:10px} th{background:#0b1324}
-    .msg{padding:10px;border-radius:12px;margin:10px 0;background:#1a0d10;border:1px solid #7f1d1d;color:#fecaca}
-    code{background:#0b1324;border:1px solid #243046;border-radius:8px;padding:2px 6px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .err{padding:12px;border-radius:12px;margin:12px 0;background:#1a0d10;border:1px solid #7f1d1d;color:#fecaca;white-space:pre-wrap}
+    .row{display:grid;grid-template-columns:1fr auto;gap:10px}
   </style>
 </head>
 <body>
 <div class="container">
   <h1>Products</h1>
-
   <form method="GET">
     <div class="row">
-      <div><input name="q" value="<?= htmlspecialchars($q) ?>" placeholder="e.g., Mug"></div>
+      <input name="q" value="<?= htmlspecialchars($q) ?>" placeholder="Search name (e.g., Mug)">
+      <button type="submit">Search</button>
     </div>
-    <div style="margin-top:8px"><button type="submit">Search</button>
-      <a href="/products.php">Reset</a></div>
   </form>
 
   <?php if(!$res): ?>
-    <div class="msg"><b>SQL Error:</b> <?= htmlspecialchars($mysqli->error) ?></div>
-    <pre class="msg" style="white-space:pre-wrap"><?= htmlspecialchars($sql) ?></pre>
+    <div class="err"><b>SQL Error:</b> <?= htmlspecialchars($mysqli->error) ?></div>
+    <div class="err"><b>Query:</b> <?= htmlspecialchars($sql) ?></div>
   <?php else: ?>
     <table>
       <thead><tr><th>Name</th><th>Price</th><th>Description</th></tr></thead>

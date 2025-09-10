@@ -1,6 +1,3 @@
-<?php
-error_reporting(0);
-?>
 <!doctype html>
 <html>
 <head>
@@ -24,7 +21,7 @@ error_reporting(0);
     <h1>Acme Shop</h1>
     <span class="pill">DB: shop</span>
   </div>
-  <p class="muted">Browse our products. (Trainer note: the search is intentionally vulnerable to SQL injection.)</p>
+  <p class="muted">Browse our products.</p>
   <p><a class="btn" href="/products.php">Open Products</a></p>
 </div></div>
 </body>
