@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     <input name="password" type="password" placeholder="alice123">
     <button type="submit">Sign in</button>
   </form>
-  <p class="muted" style="margin-top:10px">Try payloads like <code>' OR '1'='1 -- -</code> or alter just one field.</p>
+  <p class="muted" style="margin-top:10px">Good Luck!</p>
 </div></div>
 </body>
 </html>
