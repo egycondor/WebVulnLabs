@@ -1,0 +1,3 @@
+BoliRo Medical | Patient 1001 | Name: Alice Smith | Blood: O+
+Allergies: None
+Notes: Routine check.

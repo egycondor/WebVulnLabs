@@ -1,0 +1,3 @@
+BoliRo Medical | Patient 1002 | Name: Bob Jones | Blood: A-
+Allergies: Penicillin
+Notes: Follow-up in 2 weeks.

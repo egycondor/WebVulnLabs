@@ -1,0 +1,3 @@
+BoliRo Medical | Patient 1003 | Name: Cathy Lee | Blood: B+
+Allergies: Peanuts
+Notes: Refer to cardiology.
