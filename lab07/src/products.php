@@ -37,16 +37,10 @@ $res = $mysqli->query($sql);
 <body>
 <div class="container">
   <h1>Products</h1>
-  <p class="muted">Search by name. Try exploring with SQLi:
-    <code>' ORDER BY 1 -- </code>,
-    <code>' UNION SELECT @@hostname,database(),version() -- -</code>,
-    <code>' UNION SELECT user(), current_user(), database() -- -</code>
-  </p>
 
   <form method="GET">
     <div class="row">
       <div><input name="q" value="<?= htmlspecialchars($q) ?>" placeholder="e.g., Mug"></div>
-      <div><input name="sort" value="<?= htmlspecialchars($sort) ?>" placeholder="ORDER BY expr (e.g., 1 or price)"></div>
     </div>
     <div style="margin-top:8px"><button type="submit">Search</button>
       <a href="/products.php">Reset</a></div>
