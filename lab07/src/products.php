@@ -8,7 +8,7 @@ if($mysqli->connect_error){
   echo '<div style="padding:12px;background:#1a0d10;border:1px solid #7f1d1d;color:#fecaca;border-radius:12px">DB connection error.</div>';
   exit;
 }
-
+mysqli_report(MYSQLI_REPORT_OFF);   // prevent exceptions on SQL errors; return false instead
 $q = $_GET['q'] ?? '';
 
 // Intentionally vulnerable
