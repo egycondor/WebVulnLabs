@@ -3,16 +3,13 @@ services:
     image: php:8.3-apache
     volumes:
       - ./src:/var/www/html
-    ports: ["8094:80"]
+    ports:
+      - "8094:80"
     command: >
-      bash -lc "apt-get update &&
-      DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
-      build-essential autoconf pkg-config libtool tcl tcl-dev expect &&
-      pecl install expect &&
-      echo 'extension=expect.so' > /usr/local/etc/php/conf.d/expect.ini &&
-      a2enmod rewrite &&
-      sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
-      apache2-foreground"
+      bash -lc "
+        a2enmod rewrite &&
+        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
+        apache2-foreground"
     networks: [labnet]
 
   meta:
