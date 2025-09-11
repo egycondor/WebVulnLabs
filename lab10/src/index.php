@@ -9,6 +9,7 @@
     <a href="/import-basic.php">Local Import (Basic)</a>
     <a href="/import-hardened.php">Local Import (Hardened)</a>
     <a href="/import-network.php">Network Import (XXE/SSRF)</a>
+    <a href="/import-upload.php">Upload Import (XXE)</a>
   </div>
 </div></div>
 <?php theme_foot(); ?>

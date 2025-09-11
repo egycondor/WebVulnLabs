@@ -28,10 +28,7 @@ class H(BaseHTTPRequestHandler):
                 "Expiration": "2099-12-31T23:59:59Z"
             })
         if self.path == "/secrets/db":
-            return self._send(200, "user=app
-password=s3cr3t
-host=10.0.0.5
-", "text/plain")
+            return self._send(200, "user=app\npassword=s3cr3t\nhost=10.0.0.5\n", "text/plain")
         if self.path == "/secrets/tokens":
             return self._send(200, {"serviceA":"token-123","serviceB":"token-456"})
         return self._send(404, {"error":"not found","path": self.path})

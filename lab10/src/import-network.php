@@ -15,7 +15,6 @@ $raw = $_POST['xml'] ?? '';
   <?php if($_SERVER['REQUEST_METHOD']==='POST'): ?>
     <?php
       libxml_use_internal_errors(true);
-      // Intentionally network-enabled: allow DTD and entity substitution (SSRF)
       $xml = simplexml_load_string($raw, "SimpleXMLElement",
         LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOENT);
       if(!$xml){
