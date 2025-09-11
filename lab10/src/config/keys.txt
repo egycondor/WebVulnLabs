@@ -1,0 +1,3 @@
+internal_key_id=DEMO-12345
+api_key=DEMO-API-KEY-XYZ
+notes=sample data file for training
