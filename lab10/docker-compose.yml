@@ -7,8 +7,14 @@ services:
       - "8094:80"
     command: >
       bash -lc "
+        apt-get update &&
+        DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          gcc make autoconf pkg-config \
+          expect tcl-dev &&
+        yes '' | pecl install expect &&
+        echo 'extension=expect.so' > /usr/local/etc/php/conf.d/expect.ini &&
         a2enmod rewrite &&
-        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
+        sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
         apache2-foreground"
     networks: [labnet]
 
