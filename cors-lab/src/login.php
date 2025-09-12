@@ -9,6 +9,22 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   $p = $_POST['password'] ?? '';
   if($u==='alice' && $p==='alice123'){
     $_SESSION['user'] = ['name'=>'alice','email'=>'alice@example.com','balance'=>'$5000'];
+
+    // Explicitly set cookie with SameSite=None so it works cross-site
+    $cookieParams = session_get_cookie_params();
+    setcookie(
+      session_name(),
+      session_id(),
+      [
+        'expires' => time() + 3600,
+        'path' => $cookieParams['path'],
+        'domain' => $cookieParams['domain'],
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => 'None'
+      ]
+    );
+
     header('Location: /account.php'); exit;
   } else { $err = 'Invalid credentials.'; }
 }
