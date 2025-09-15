@@ -6,38 +6,42 @@ services:
     ports:
       - "8099:80"
       - "8443:443"
-    command: >
-      bash -c "
-        a2enmod rewrite ssl &&
-        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
-        mkdir -p /etc/apache2/ssl &&
+    command:
+      - bash
+      - -lc
+      - |
+        set -e
+        a2enmod rewrite ssl
+        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf
+        mkdir -p /etc/apache2/ssl
         openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
           -subj '/CN=victim.example.test' \
           -keyout /etc/apache2/ssl/selfsigned.key \
-          -out /etc/apache2/ssl/selfsigned.crt &&
-        echo '<VirtualHost *:80>
-  ServerName victim.example.test
-  DocumentRoot /var/www/html
-  <Directory /var/www/html>
-    AllowOverride All
-    Require all granted
-  </Directory>
-</VirtualHost>
+          -out /etc/apache2/ssl/selfsigned.crt
+        cat >/etc/apache2/sites-available/lab-ssl.conf <<'EOF'
+        <VirtualHost *:80>
+          ServerName victim.example.test
+          DocumentRoot /var/www/html
+          <Directory /var/www/html>
+            AllowOverride All
+            Require all granted
+          </Directory>
+        </VirtualHost>
 
-<VirtualHost *:443>
-  ServerName victim.example.test
-  DocumentRoot /var/www/html
-  SSLEngine on
-  SSLCertificateFile /etc/apache2/ssl/selfsigned.crt
-  SSLCertificateKeyFile /etc/apache2/ssl/selfsigned.key
-  <Directory /var/www/html>
-    AllowOverride All
-    Require all granted
-  </Directory>
-</VirtualHost>' > /etc/apache2/sites-available/lab-ssl.conf &&
-        a2ensite lab-ssl.conf &&
+        <VirtualHost *:443>
+          ServerName victim.example.test
+          DocumentRoot /var/www/html
+          SSLEngine on
+          SSLCertificateFile /etc/apache2/ssl/selfsigned.crt
+          SSLCertificateKeyFile /etc/apache2/ssl/selfsigned.key
+          <Directory /var/www/html>
+            AllowOverride All
+            Require all granted
+          </Directory>
+        </VirtualHost>
+        EOF
+        a2ensite lab-ssl.conf
         apache2-foreground
-      "
     networks: [labnet]
 
 networks:
