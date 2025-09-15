@@ -1,4 +1,3 @@
-
 services:
   web:
     image: php:8.3-apache
@@ -8,18 +7,15 @@ services:
       - "8099:80"
       - "8443:443"
     command: >
-      bash -lc "
+      bash -c "
         a2enmod rewrite ssl &&
         sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
         mkdir -p /etc/apache2/ssl &&
-        # Generate self-signed cert (valid 365 days) for victim.example.test
-        openssl req -x509 -nodes -newkey rsa:2048 -days 365
-          -subj '/CN=victim.example.test'
-          -keyout /etc/apache2/ssl/selfsigned.key
+        openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
+          -subj '/CN=victim.example.test' \
+          -keyout /etc/apache2/ssl/selfsigned.key \
           -out /etc/apache2/ssl/selfsigned.crt &&
-        # Write HTTP and HTTPS vhosts
-        printf '%s\n' '
-<VirtualHost *:80>
+        echo '<VirtualHost *:80>
   ServerName victim.example.test
   DocumentRoot /var/www/html
   <Directory /var/www/html>
@@ -38,10 +34,10 @@ services:
     AllowOverride All
     Require all granted
   </Directory>
-</VirtualHost>
-' > /etc/apache2/sites-available/lab-ssl.conf &&
+</VirtualHost>' > /etc/apache2/sites-available/lab-ssl.conf &&
         a2ensite lab-ssl.conf &&
-        apache2-foreground"
+        apache2-foreground
+      "
     networks: [labnet]
 
 networks:
