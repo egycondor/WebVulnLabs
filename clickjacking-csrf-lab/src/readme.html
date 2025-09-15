@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8">
+<title>Lab Readme</title>
+<style>body{font:16px/1.45 system-ui,Segoe UI,Roboto;margin:40px;max-width:900px}</style>
+<h1>Clickjacking + CSRF token</h1>
+<p>Goal: delete your account by luring a victim to a decoy page that frames <code>/account.php</code> and routes their click onto the hidden Delete button. CSRF token will not help because the click happens inside the framed page under the victim's session.</p>
+<ol>
+  <li>Run the lab and login at <code>/login.php</code> with <b>alice / alice123</b>.</li>
+  <li>Host the attacker HTML from a different origin (e.g., <code>python3 -m http.server 8000</code>).</li>
+  <li>Craft HTML that overlays a near-transparent iframe of <code>/account.php</code> over a big decoy button that says <b>CLICK</b>.</li>
+  <li>When the victim clicks, the hidden Delete button receives the click and the account is deleted.</li>
+</ol>
