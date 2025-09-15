@@ -1,0 +1,20 @@
+services:
+  web:
+    image: php:8.3-apache
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8099:80"
+    command: >
+      bash -lc "
+        a2enmod rewrite &&
+        sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
+        apache2-foreground"
+    networks: [labnet]
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
