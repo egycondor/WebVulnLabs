@@ -1,6 +1,6 @@
-
 <?php
-require __DIR__.'/../header.php'; require __DIR__.'/../utils.php'; require_login(); start_lab_session();
+require __DIR__.'/../utils.php'; require_login();
+require __DIR__.'/../header.php';
 $msg='';
 if($_SERVER['REQUEST_METHOD']==='POST' && ($_POST['do']??'')==='delete'){
   $token = $_POST['csrf'] ?? '';

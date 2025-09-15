@@ -1,4 +1,3 @@
-
 <?php
 require __DIR__.'/header.php'; theme_head('Clickjacking Lab (HTTPS)');
 ?>

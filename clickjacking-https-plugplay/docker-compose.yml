@@ -12,7 +12,7 @@ services:
       - |
         set -e
         a2enmod rewrite ssl
-        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf
+        sed -ri 's/AllowOverride\\s+None/AllowOverride All/i' /etc/apache2/apache2.conf
         mkdir -p /etc/apache2/ssl
         openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
           -subj '/CN=victim.example.test' \
@@ -27,7 +27,7 @@ services:
             Require all granted
           </Directory>
         </VirtualHost>
-
+        
         <VirtualHost *:443>
           ServerName victim.example.test
           DocumentRoot /var/www/html

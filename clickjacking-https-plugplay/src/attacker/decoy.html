@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,9 +9,9 @@
     .box{position:relative;width:520px;height:420px;background:#0f172a;border-radius:16px;overflow:hidden;outline:2px dashed #0ea5e9}
     .trap{
       position:absolute;border:0;z-index:2;
-      /* DEBUG (see alignment): */ opacity:0.5; outline:2px solid lime;
-      /* PRODUCTION (stealth):  opacity:0.01; outline:none; */
-      inset:0; /* full-card iframe; or crop to button using fixed width/height/top/left */
+      /* DEBUG: visible */ opacity:0.5; outline:2px solid lime;
+      /* PRODUCTION: stealth */ /* opacity:0.01; outline:none; */
+      inset:0;
     }
     .overlay{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:18px;z-index:3;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.6)}
   </style>
