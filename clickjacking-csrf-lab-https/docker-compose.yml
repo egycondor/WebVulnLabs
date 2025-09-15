@@ -1,0 +1,25 @@
+services:
+  web:
+    image: php:8.3-apache
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8097:80"
+      - "8443:443"
+    command: >
+      bash -lc "
+        a2enmod rewrite ssl &&
+        openssl req -x509 -newkey rsa:2048 -nodes -keyout /etc/ssl/private/lab.key -out /etc/ssl/certs/lab.crt -subj '/CN=10.10.0.2' -days 365 &&
+        printf '<VirtualHost *:80>\n  DocumentRoot /var/www/html\n</VirtualHost>\n' > /etc/apache2/sites-available/000-default.conf &&
+        printf '<IfModule mod_ssl.c>\n<VirtualHost *:443>\n  SSLEngine on\n  SSLCertificateFile /etc/ssl/certs/lab.crt\n  SSLCertificateKeyFile /etc/ssl/private/lab.key\n  DocumentRoot /var/www/html\n</VirtualHost>\n</IfModule>\n' > /etc/apache2/sites-available/default-ssl.conf &&
+        a2ensite default-ssl &&
+        sed -ri 's/AllowOverride\s+None/AllowOverride All/i' /etc/apache2/apache2.conf &&
+        apache2-foreground"
+    networks: [labnet]
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24

@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8">
+<title>Lab Readme</title>
+<style>body{font:16px/1.45 system-ui,Segoe UI,Roboto;margin:40px;max-width:900px}</style>
+<h1>Clickjacking + CSRF token (HTTPS)</h1>
+<ol>
+  <li>Start: <code>docker compose up -d</code></li>
+  <li>Login at <code>https://10.10.0.2:8443/login.php</code> (accept the self-signed cert), user <b>alice / alice123</b>.</li>
+  <li>Host a decoy page on <code>http://127.0.0.1:8000</code> that frames <code>https://10.10.0.2:8443/account.php</code>.</li>
+  <li>The session cookie is set with <code>SameSite=None; Secure</code>, so third-party iframes can send it. Clicking the decoy should delete the account.</li>
+</ol>
