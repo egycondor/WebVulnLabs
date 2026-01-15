@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Device Configuration - MediCare HMS{% endblock %}
+
+{% block content %}
+<div class="configure-page">
+    <div class="page-header">
+        <h1><i class="fas fa-cog"></i> Medical Device Configuration</h1>
+        <p class="subtitle">Upload YAML configuration files for medical devices</p>
+    </div>
+
+    <div class="config-container">
+        <div class="config-info">
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> About Device Configuration</h3>
+                <p>Medical devices use YAML format for configuration due to its human-readable structure and flexibility. This system supports advanced configuration options for:</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Ventilators and respiratory equipment</li>
+                    <li><i class="fas fa-check"></i> Patient monitoring systems</li>
+                    <li><i class="fas fa-check"></i> ECG and diagnostic machines</li>
+                    <li><i class="fas fa-check"></i> Infusion pumps and IV systems</li>
+                </ul>
+                <div class="warning-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Note:</strong> Advanced configurations may include dynamic settings that require full YAML parsing capabilities.
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h3><i class="fas fa-code"></i> Example Configuration</h3>
+                <pre><code>device:
+  name: "Ventilator V-2047"
+  type: "respiratory"
+  settings:
+    mode: "pressure_control"
+    tidal_volume: 500
+    respiratory_rate: 12
+    peep: 5
+  alarms:
+    enabled: true
+    thresholds:
+      pressure_high: 40
+      pressure_low: 5</code></pre>
+            </div>
+        </div>
+
+        <div class="config-form-card">
+            <h2><i class="fas fa-upload"></i> Upload Configuration</h2>
+            <form method="POST" action="{{ url_for('configure') }}" class="config-form">
+                <div class="form-group">
+                    <label for="yaml_config">
+                        <i class="fas fa-file-code"></i> YAML Configuration
+                    </label>
+                    <textarea 
+                        id="yaml_config" 
+                        name="yaml_config" 
+                        rows="15" 
+                        placeholder="Paste your YAML configuration here..."
+                        required
+                    >{% if request.method == 'GET' %}device:
+  name: "Medical Device"
+  type: "monitoring"
+  settings:
+    sample_rate: 1000
+    alarm_enabled: true{% endif %}</textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Upload Configuration
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Clear
+                    </button>
+                </div>
+            </form>
+
+            {% if config %}
+            <div class="config-result">
+                <h3><i class="fas fa-check-circle"></i> Configuration Applied</h3>
+                <pre><code>{{ config }}</code></pre>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

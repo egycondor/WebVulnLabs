@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Patients - MediCare HMS{% endblock %}
+
+{% block content %}
+<div class="patients-page">
+    <div class="page-header">
+        <h1><i class="fas fa-user-injured"></i> Patient Management</h1>
+        <p class="subtitle">View and manage patient records</p>
+    </div>
+
+    <div class="patients-table-container">
+        <table class="patients-table">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Condition</th>
+                    <th>Room</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>P-2024-001</td>
+                    <td>John Doe</td>
+                    <td>45</td>
+                    <td>Post-operative</td>
+                    <td>304</td>
+                    <td><span class="badge badge-success">Stable</span></td>
+                    <td><a href="#" class="btn-link">View</a></td>
+                </tr>
+                <tr>
+                    <td>P-2024-002</td>
+                    <td>Jane Smith</td>
+                    <td>32</td>
+                    <td>Respiratory</td>
+                    <td>305</td>
+                    <td><span class="badge badge-warning">Monitoring</span></td>
+                    <td><a href="#" class="btn-link">View</a></td>
+                </tr>
+                <tr>
+                    <td>P-2024-003</td>
+                    <td>Robert Johnson</td>
+                    <td>58</td>
+                    <td>Cardiac</td>
+                    <td>201</td>
+                    <td><span class="badge badge-success">Stable</span></td>
+                    <td><a href="#" class="btn-link">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+

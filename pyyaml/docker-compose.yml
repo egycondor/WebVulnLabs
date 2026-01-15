@@ -1,0 +1,17 @@
+services:
+  flask-app:
+    build: .
+    container_name: pyyaml-flask-app
+    ports:
+      - "5001:5000"
+    restart: unless-stopped
+
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24   # pick a free /24

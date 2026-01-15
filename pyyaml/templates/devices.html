@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Medical Devices - MediCare HMS{% endblock %}
+
+{% block content %}
+<div class="devices-page">
+    <div class="page-header">
+        <h1><i class="fas fa-microchip"></i> Medical Devices</h1>
+        <p class="subtitle">Manage and monitor all medical equipment</p>
+    </div>
+
+    <div class="devices-grid">
+        <div class="device-card">
+            <div class="device-header">
+                <i class="fas fa-lungs device-icon"></i>
+                <span class="device-status online">Online</span>
+            </div>
+            <h3>Ventilator V-2047</h3>
+            <p class="device-type">Respiratory Equipment</p>
+            <div class="device-info">
+                <p><i class="fas fa-map-marker-alt"></i> ICU - Room 304</p>
+                <p><i class="fas fa-calendar"></i> Last configured: 2 hours ago</p>
+            </div>
+            <a href="{{ url_for('configure') }}" class="btn btn-sm btn-primary">Configure</a>
+        </div>
+
+        <div class="device-card">
+            <div class="device-header">
+                <i class="fas fa-heartbeat device-icon"></i>
+                <span class="device-status online">Online</span>
+            </div>
+            <h3>Patient Monitor PM-8921</h3>
+            <p class="device-type">Monitoring System</p>
+            <div class="device-info">
+                <p><i class="fas fa-map-marker-alt"></i> ER - Bay 12</p>
+                <p><i class="fas fa-calendar"></i> Last configured: 1 day ago</p>
+            </div>
+            <a href="{{ url_for('configure') }}" class="btn btn-sm btn-primary">Configure</a>
+        </div>
+
+        <div class="device-card">
+            <div class="device-header">
+                <i class="fas fa-wave-square device-icon"></i>
+                <span class="device-status online">Online</span>
+            </div>
+            <h3>ECG Machine E-3401</h3>
+            <p class="device-type">Diagnostic Equipment</p>
+            <div class="device-info">
+                <p><i class="fas fa-map-marker-alt"></i> Cardiology - Room 201</p>
+                <p><i class="fas fa-calendar"></i> Last configured: 3 days ago</p>
+            </div>
+            <a href="{{ url_for('configure') }}" class="btn btn-sm btn-primary">Configure</a>
+        </div>
+
+        <div class="device-card">
+            <div class="device-header">
+                <i class="fas fa-tint device-icon"></i>
+                <span class="device-status online">Online</span>
+            </div>
+            <h3>Infusion Pump IP-5567</h3>
+            <p class="device-type">IV System</p>
+            <div class="device-info">
+                <p><i class="fas fa-map-marker-alt"></i> Ward 5 - Bed 23</p>
+                <p><i class="fas fa-calendar"></i> Last configured: 5 hours ago</p>
+            </div>
+            <a href="{{ url_for('configure') }}" class="btn btn-sm btn-primary">Configure</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
