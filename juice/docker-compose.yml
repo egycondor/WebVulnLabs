@@ -1,0 +1,27 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest   # pin a version (example tag)
+    container_name: juice-shop
+    expose:
+      - "3000"
+    networks:
+      - labnet
+
+  cors-proxy:
+    image: nginx:alpine
+    container_name: juice-cors-proxy
+    ports:
+      - "3000:80"  # users go to http://HOST:3000 (via proxy)
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - juice-shop
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.77.0/24   # pick a free /24

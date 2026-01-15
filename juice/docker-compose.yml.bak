@@ -1,0 +1,23 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: juice-shop
+    ports:
+      # Safer default: bind only to localhost (recommended in official run example)
+      # If you want LAN access instead, replace the line above with:
+       - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - labnet
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+networks:
+  labnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.77.0/24   # pick a free /24
