@@ -1,0 +1,123 @@
+dn: ou=people,dc=corpconnect,dc=local
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=corpconnect,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=admin,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: admin
+cn: Sarah Chen
+sn: Chen
+userPassword: {CLEARTEXT}Adm!nP@ss2024
+mail: sarah.chen@corpconnect.local
+title: IT Director
+departmentNumber: IT
+telephoneNumber: +1-555-0101
+description: SvcAcct_Backup_Key:Tr0ub4dor&3
+
+dn: uid=jthompson,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: jthompson
+cn: James Thompson
+sn: Thompson
+userPassword: {CLEARTEXT}Summer2024!
+mail: james.thompson@corpconnect.local
+title: Security Analyst
+departmentNumber: IT Security
+telephoneNumber: +1-555-0102
+description: Desk 4B-North
+
+dn: uid=mgarcia,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: mgarcia
+cn: Maria Garcia
+sn: Garcia
+userPassword: {CLEARTEXT}Welc0me!2024
+mail: maria.garcia@corpconnect.local
+title: HR Manager
+departmentNumber: Human Resources
+telephoneNumber: +1-555-0103
+description: HR-Portal-Temp-Pass:HRaccess99
+
+dn: uid=rjohnson,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: rjohnson
+cn: Robert Johnson
+sn: Johnson
+userPassword: {CLEARTEXT}Qwerty456!
+mail: robert.johnson@corpconnect.local
+title: CFO
+departmentNumber: Finance
+telephoneNumber: +1-555-0104
+description: Executive Floor 12
+
+dn: uid=svc-backup,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: svc-backup
+cn: Backup Service Account
+sn: Account
+userPassword: {CLEARTEXT}B@ckup_Svc!2023
+mail: svc-backup@corpconnect.local
+title: Service Account
+departmentNumber: IT Operations
+telephoneNumber: none
+description: Automated backup - do not disable - LDAP bind pass: LdapB1nd#Secret
+
+dn: uid=alee,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: alee
+cn: Angela Lee
+sn: Lee
+userPassword: {CLEARTEXT}Passw0rd!
+mail: angela.lee@corpconnect.local
+title: Software Engineer
+departmentNumber: Engineering
+telephoneNumber: +1-555-0106
+description: Building C Room 301
+
+dn: uid=bwilson,ou=people,dc=corpconnect,dc=local
+objectClass: inetOrgPerson
+uid: bwilson
+cn: Brian Wilson
+sn: Wilson
+userPassword: {CLEARTEXT}Winter2024#
+mail: brian.wilson@corpconnect.local
+title: Network Engineer
+departmentNumber: IT
+telephoneNumber: +1-555-0107
+description: VPN-Admin-Temp:VpnR00t!2024
+
+dn: cn=admins,ou=groups,dc=corpconnect,dc=local
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: admins
+uniqueMember: uid=admin,ou=people,dc=corpconnect,dc=local
+
+dn: cn=employees,ou=groups,dc=corpconnect,dc=local
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: employees
+uniqueMember: uid=jthompson,ou=people,dc=corpconnect,dc=local
+uniqueMember: uid=alee,ou=people,dc=corpconnect,dc=local
+uniqueMember: uid=bwilson,ou=people,dc=corpconnect,dc=local
+
+dn: cn=hr,ou=groups,dc=corpconnect,dc=local
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: hr
+uniqueMember: uid=mgarcia,ou=people,dc=corpconnect,dc=local
+
+dn: cn=executives,ou=groups,dc=corpconnect,dc=local
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: executives
+uniqueMember: uid=rjohnson,ou=people,dc=corpconnect,dc=local
+
+dn: cn=service-accounts,ou=groups,dc=corpconnect,dc=local
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: service-accounts
+uniqueMember: uid=svc-backup,ou=people,dc=corpconnect,dc=local
