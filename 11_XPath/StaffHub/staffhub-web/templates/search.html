@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Directory search — StaffHub{% endblock %}
+{% block body %}
+<header>
+  <span class="brand">StaffHub</span>
+  <span><a href="{{ url_for('dashboard') }}">Dashboard</a></span>
+</header>
+<main>
+  <div class="panel">
+    <h1>Employee directory</h1>
+    <form method="get" action="{{ request.path }}">
+      <label for="q">Query <span style="color:var(--muted); font-weight:400">(q)</span></label>
+      <input id="q" name="q" type="text" value="{{ q }}">
+      <button type="submit">Search</button>
+    </form>
+    <p style="margin-top:1rem; color: var(--muted); font-size: 0.9rem;">
+      Showing results for: <strong style="color:var(--text)">{{ q }}</strong>
+    </p>
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Department</th><th>Title</th></tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td>{{ row.department }}</td>
+          <td>{{ row.title }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" style="color:var(--muted)">No rows matched.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}

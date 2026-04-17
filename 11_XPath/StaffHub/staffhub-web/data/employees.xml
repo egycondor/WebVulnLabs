@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+  <employee id="1">
+    <username>admin</username>
+    <password>Pr0dAdm!n2024</password>
+    <name>Sarah Chen</name>
+    <role>administrator</role>
+    <department>IT Security</department>
+    <title>Security Director</title>
+  </employee>
+  <employee id="2">
+    <username>jthompson</username>
+    <password>Summer2024!</password>
+    <name>James Thompson</name>
+    <role>employee</role>
+    <department>Engineering</department>
+    <title>Senior Developer</title>
+  </employee>
+  <employee id="3">
+    <username>mgarcia</username>
+    <password>W3lcome#99</password>
+    <name>Maria Garcia</name>
+    <role>employee</role>
+    <department>Human Resources</department>
+    <title>HR Manager</title>
+  </employee>
+  <employee id="4">
+    <username>rkim</username>
+    <password>Qwerty!456</password>
+    <name>Robert Kim</name>
+    <role>manager</role>
+    <department>Finance</department>
+    <title>Finance Lead</title>
+  </employee>
+  <employee id="5">
+    <username>lpatel</username>
+    <password>Tr@vel2024</password>
+    <name>Lisa Patel</name>
+    <role>employee</role>
+    <department>Engineering</department>
+    <title>Junior Developer</title>
+  </employee>
+  <employee id="6">
+    <username>dwright</username>
+    <password>S3cur3P@ss!</password>
+    <name>David Wright</name>
+    <role>auditor</role>
+    <department>Compliance</department>
+    <title>Internal Auditor</title>
+  </employee>
+</employees>

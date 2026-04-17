@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Login — StaffHub{% endblock %}
+{% block body %}
+<header><span class="brand">StaffHub</span><span></span></header>
+<main>
+  <div class="panel">
+    <h1>Internal login</h1>
+    <p style="color: var(--muted);">Corporate staff directory &amp; authentication portal.</p>
+    <form method="post" action="{{ url_for('login') }}">
+      <p>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </p>
+      <button type="submit">Sign in</button>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+    </form>
+  </div>
+</main>
+{% endblock %}

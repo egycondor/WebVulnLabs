@@ -1,0 +1,16 @@
+services:
+  staffhub-web:
+    build:
+      context: ./staffhub-web
+    container_name: staffhub-web
+    expose:
+      - "5000"
+
+  staffhub-proxy:
+    build:
+      context: ./nginx
+    container_name: staffhub-proxy
+    depends_on:
+      - staffhub-web
+    ports:
+      - "5739:80"

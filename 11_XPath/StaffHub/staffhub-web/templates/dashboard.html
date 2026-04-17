@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — StaffHub{% endblock %}
+{% block body %}
+<header>
+  <span class="brand">StaffHub</span>
+  <span style="color: var(--muted); font-size: 0.9rem;">Signed in as {{ user.username }}</span>
+</header>
+<main>
+  <div class="panel">
+    <h1>Welcome, {{ user.name }}</h1>
+    <p><strong>Role:</strong> {{ user.role }} &nbsp;·&nbsp; <strong>Department:</strong> {{ user.department }}</p>
+    <p style="color: var(--muted); margin-top: 1.25rem;">Browse the directory by department keyword.</p>
+    <form method="get" action="{{ url_for('search') }}">
+      <label for="q">Search</label>
+      <input id="q" name="q" type="text" placeholder="e.g. Engineering" value="">
+      <button type="submit">Search</button>
+    </form>
+    <p style="margin-top: 1.25rem;">
+      <a href="{{ url_for('search') }}">Open directory search</a>
+    </p>
+  </div>
+</main>
+{% endblock %}
